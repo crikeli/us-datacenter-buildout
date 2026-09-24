@@ -1,0 +1,24 @@
+name: us-datacenter-buildout
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - pandas
+  - geopandas
+  - numpy
+  - shapely
+  - matplotlib
+  - requests
+  - pyarrow
+  - rasterio
+  - rioxarray
+  - pystac-client
+  - planetary-computer
+  - scikit-learn
+  - openjdk=17
+  - pip
+  - pip:
+      - pyspark
+      - boto3
+      - rio-cogeo

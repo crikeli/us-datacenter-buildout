@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>US Data Center Buildout Tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<style>
+  :root {
+    --bg: #ffffff; --ink: #1a1a1a; --muted: #5b5f66; --border: #e2e4e8;
+    --surface: #f6f7f9; --accent: #2a78d6; --warn: #c2410c; --ok: #15803d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1117; --ink: #e6e8eb; --muted: #9aa1ab; --border: #2a2e35;
+      --surface: #161a21; --accent: #4f9bf0; --warn: #fb923c; --ok: #4ade80;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; flex-direction: column; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  header { padding: 16px clamp(16px, 4vw, 32px) 0; }
+  h1 { margin: 0 0 4px; font-size: 1.4rem; }
+  .caption { color: var(--muted); margin: 0 0 12px; font-size: 0.9rem; }
+  .tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--border); padding: 0 clamp(16px, 4vw, 32px); overflow-x: auto; }
+  .tab-btn { background: none; border: none; padding: 10px 0; font-size: 15px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  #tab-map { flex: 1 1 auto; min-height: 0; display: none; position: relative; }
+  #tab-map.active { display: block; }
+  #map { height: 100%; width: 100%; }
+
+  .controls {
+    position: absolute; top: 12px; right: 12px; z-index: 1000; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px;
+    max-width: 230px;
+  }
+  .controls label { display: block; margin: 5px 0; cursor: pointer; }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+
+  .panel { display: none; padding: 16px clamp(16px, 4vw, 32px) 48px; overflow-y: auto; flex: 1 1 auto; min-height: 0; }
+  .panel.active { display: block; }
+  .panel h2 { font-size: 1.1rem; margin: 20px 0 8px; }
+  .panel h2:first-child { margin-top: 0; }
+  .panel p { color: var(--muted); line-height: 1.5; max-width: 760px; }
+  a { color: var(--accent); }
+  code { background: var(--surface); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+
+  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 20px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; min-width: 130px; }
+  .stat-card .n { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat-card .l { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  table { border-collapse: collapse; width: 100%; max-width: 760px; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  tr:hover td { background: var(--surface); }
+
+  .imagery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; max-width: 1100px; }
+  .imagery-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+  .imagery-card .pair { display: grid; grid-template-columns: 1fr 1fr; }
+  .imagery-card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
+  .imagery-card .cap { display: grid; grid-template-columns: 1fr 1fr; font-size: 0.72rem; color: var(--muted); text-align: center; padding: 3px 0; }
+  .imagery-card .meta { padding: 10px 12px; }
+  .imagery-card .meta .name { font-weight: 600; font-size: 0.92rem; }
+  .imagery-card .meta .sub { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+
+  .badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 0.72rem; font-weight: 600; }
+  .badge.emerging { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+  .badge.operating { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+
+  .leaflet-popup-content { font-size: 0.85rem; }
+  .leaflet-popup-content b { font-size: 0.92rem; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>US Data Center Buildout Tracker</h1>
+    <p class="caption">Where data centers are being proposed, built, and cancelled across the US, and who lives nearby - see the Limitations tab before drawing conclusions.</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="map">Map</button>
+      <button class="tab-btn" data-tab="before-after">Before / After</button>
+      <button class="tab-btn" data-tab="rankings">State Rankings</button>
+      <button class="tab-btn" data-tab="limitations">Limitations, Tested</button>
+      <button class="tab-btn" data-tab="about">About</button>
+    </div>
+  </header>
+
+  <div id="tab-map" class="active">
+    <div id="map"></div>
+    <div class="controls">
+      <div><b>Status</b></div>
+      <label><input type="checkbox" class="status-filter" value="emerging" checked> <span class="legend-dot" style="background:#c2410c"></span>Proposed / building</label>
+      <label><input type="checkbox" class="status-filter" value="operating" checked> <span class="legend-dot" style="background:#15803d"></span>Operating</label>
+      <label><input type="checkbox" class="status-filter" value="other" checked> <span class="legend-dot" style="background:#6b7280"></span>Cancelled / suspended</label>
+      <div style="margin-top:8px;color:var(--muted);font-size:11px">Click a marker for details.</div>
+    </div>
+  </div>
+
+  <div id="tab-before-after" class="panel">
+    <h2>9 real before/after pairs</h2>
+    <p>Curated from the 1,693-facility dataset: large (100+ acre), high-location-confidence, actively-building-or-operating sites, so real construction is visible at Sentinel-2's 10m resolution. Colocation sites in dense cities were excluded - a data center added to an existing building doesn't show up as land-cover change from orbit. "Before" is a 2017-2018 baseline; "after" is the most recent low-cloud scene as of this build.</p>
+    <div id="imagery-grid" class="imagery-grid"></div>
+  </div>
+
+  <div id="tab-rankings" class="panel">
+    <h2>Facilities by state</h2>
+    <p>Reported capacity (MW) reflects only the ~40% of facilities where FracTracker has a disclosed value - treat totals as a floor, not a complete inventory.</p>
+    <table id="rankings-table">
+      <thead><tr><th>State</th><th>Facilities</th><th>Proposed/Building</th><th>Operating</th><th>Reported MW</th><th>Documented pushback</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="tab-limitations" class="panel">
+    <h2>Data completeness</h2>
+    <p id="lim-dataset"></p>
+    <h2>Census population method</h2>
+    <p id="lim-census"></p>
+    <h2>Proximity method</h2>
+    <p id="lim-proximity"></p>
+    <h2>A counterintuitive finding</h2>
+    <p id="lim-pushback"></p>
+    <table id="pushback-table" style="max-width:420px">
+      <thead><tr><th>Documented pushback?</th><th>Median pop. within 1mi</th><th>Median pop. within 3mi</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="tab-about" class="panel">
+    <h2>What this is</h2>
+    <p>A real pipeline built to showcase the AWS/geospatial data engineering stack named in a real job posting (S3, Glue/PySpark, Step Functions, Lambda, EventBridge, Redshift Serverless, Terraform, CI/CD) - see the repo's README for the full architecture and the Terraform module under <code>pipeline/terraform</code>. The AWS infrastructure ran once to produce these results and was then torn down (see README for the run evidence); this site itself is fully static.</p>
+    <h2>Data sources</h2>
+    <p>Facility locations, status, and capacity: <a href="https://www.fractracker.org/map/national/data-centers/" target="_blank" rel="noopener">FracTracker Alliance National Data Centers Tracker</a> (free non-commercial use, credited here). Population: 2020 Census, via Microsoft Planetary Computer. Imagery: Sentinel-2 L2A, via Microsoft Planetary Computer.</p>
+    <div class="stat-row" id="about-stats"></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+const STATUS_COLOR = { emerging: "#c2410c", operating: "#15803d", other: "#6b7280" };
+function statusGroup(status) {
+  if (["Proposed", "Pre-proposal", "Approved/Permitted/Under construction", "Expanding"].includes(status)) return "emerging";
+  if (status === "Operating") return "operating";
+  return "other";
+}
+function fmt(n) { return n == null ? "n/a" : n.toLocaleString(); }
+
+// ---- Map ----
+const map = L.map("map", { minZoom: 3 }).setView([39.5, -98.5], 4);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 19,
+}).addTo(map);
+
+const clusters = { emerging: L.markerClusterGroup(), operating: L.markerClusterGroup(), other: L.markerClusterGroup() };
+Object.values(clusters).forEach(c => map.addLayer(c));
+
+fetch("facilities.geojson").then(r => r.json()).then(fc => {
+  let emergingCount = 0, operatingCount = 0;
+  fc.features.forEach(f => {
+    const p = f.properties;
+    const group = statusGroup(p.status);
+    if (group === "emerging") emergingCount++;
+    if (group === "operating") operatingCount++;
+    const [lon, lat] = f.geometry.coordinates;
+    const marker = L.circleMarker([lat, lon], {
+      radius: 6, weight: 1, color: "#fff", fillColor: STATUS_COLOR[group], fillOpacity: 0.9,
+    });
+    const mw = p.mw_min ? (p.mw_min === p.mw_max ? `${fmt(p.mw_min)} MW` : `${fmt(p.mw_min)}-${fmt(p.mw_max)} MW`) : "MW not disclosed";
+    const pushback = p.community_pushback === "Yes"
+      ? `<br><span style="color:var(--warn,#c2410c)">Documented community pushback</span>${p.petition_url ? ` - <a href="${p.petition_url}" target="_blank" rel="noopener">petition</a>` : ""}`
+      : "";
+    marker.bindPopup(`
+      <b>${p.name}</b><br>
+      ${p.city ? p.city + ", " : ""}${p.state} &middot; ${p.status}<br>
+      ${mw}${p.acres ? ` &middot; ${fmt(Number(p.acres))} acres` : ""}<br>
+      Population within 3mi: ${fmt(p.pop_3mi)}${pushback}
+    `);
+    clusters[group].addLayer(marker);
+  });
+  document.getElementById("about-stats").innerHTML = `
+    <div class="stat-card"><div class="n">${fmt(fc.features.length)}</div><div class="l">Facilities tracked</div></div>
+    <div class="stat-card"><div class="n">${fmt(emergingCount)}</div><div class="l">Proposed / building</div></div>
+    <div class="stat-card"><div class="n">${fmt(operatingCount)}</div><div class="l">Operating</div></div>
+    <div class="stat-card"><div class="n">49</div><div class="l">States represented</div></div>
+  `;
+});
+
+document.querySelectorAll(".status-filter").forEach(cb => {
+  cb.addEventListener("change", () => {
+    const key = cb.value;
+    if (cb.checked) map.addLayer(clusters[key]); else map.removeLayer(clusters[key]);
+  });
+});
+
+// ---- Tabs ----
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("#tab-map, .panel").forEach(el => el.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    document.getElementById(tab === "map" ? "tab-map" : "tab-" + tab).classList.add("active");
+    if (tab === "map") setTimeout(() => map.invalidateSize(), 50);
+  });
+});
+
+// ---- Before/After ----
+fetch("imagery/manifest.json").then(r => r.json()).then(rows => {
+  const grid = document.getElementById("imagery-grid");
+  rows.forEach(r => {
+    if (r.before_status && r.before_status.startsWith("ok") && r.after_status && r.after_status.startsWith("ok")) {
+      const card = document.createElement("div");
+      card.className = "imagery-card";
+      const beforeYear = (r.before_date || "").slice(0, 4);
+      const afterYear = (r.after_date || "").slice(0, 4);
+      card.innerHTML = `
+        <div class="pair">
+          <img src="imagery/${r.slug}_before.png" alt="${r.facility_name} before" loading="lazy">
+          <img src="imagery/${r.slug}_after.png" alt="${r.facility_name} after" loading="lazy">
+        </div>
+        <div class="cap"><div>${beforeYear}</div><div>${afterYear}</div></div>
+        <div class="meta">
+          <div class="name">${r.facility_name}</div>
+          <div class="sub">${r.state} &middot; Sentinel-2 true color</div>
+        </div>`;
+      grid.appendChild(card);
+    }
+  });
+});
+
+// ---- Rankings ----
+fetch("state_summary.json").then(r => r.json()).then(rows => {
+  const tbody = document.querySelector("#rankings-table tbody");
+  rows.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${r.state}</td><td>${fmt(r.total_facilities)}</td><td>${fmt(r.emerging)}</td><td>${fmt(r.operating)}</td><td>${fmt(r.reported_mw)}</td><td>${fmt(r.pushback_count)}</td>`;
+    tbody.appendChild(tr);
+  });
+});
+
+// ---- Limitations ----
+fetch("limitations.json").then(r => r.json()).then(d => {
+  document.getElementById("lim-dataset").innerHTML =
+    `${fmt(d.dataset.total_records)} facilities. Location confidence: ${fmt(d.dataset.location_confidence_counts.High)} High, ${fmt(d.dataset.location_confidence_counts.Medium)} Medium, ${fmt(d.dataset.location_confidence_counts.Low)} Low. ` +
+    `Only ${d.dataset.mw_reported_pct}% of facilities have a disclosed capacity (MW) - aggregate capacity figures on this site are a floor, not a complete count.`;
+  document.getElementById("lim-census").textContent = d.census.note + ` Verified by summing every 2020 Census block nationwide: total = ${fmt(d.census.total_population_verified)}, matching the official 50-state + Puerto Rico population exactly.`;
+  document.getElementById("lim-proximity").textContent = d.proximity_method.note;
+  document.getElementById("lim-pushback").textContent = d.pushback_finding.note;
+  const tbody = document.querySelector("#pushback-table tbody");
+  ["Yes", "Unknown"].forEach(k => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${k}</td><td>${fmt(d.pushback_finding.median_pop_1mi_by_pushback[k])}</td><td>${fmt(d.pushback_finding.median_pop_3mi_by_pushback[k])}</td>`;
+    tbody.appendChild(tr);
+  });
+});
+</script>
+</body>
+</html>

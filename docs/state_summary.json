@@ -1,0 +1,492 @@
+[
+  {
+    "state": "VA",
+    "total_facilities": 464,
+    "emerging": 269,
+    "operating": 180,
+    "cancelled": 7,
+    "reported_mw": 18671.7,
+    "median_pop_3mi": 58192,
+    "pushback_count": 11
+  },
+  {
+    "state": "TX",
+    "total_facilities": 219,
+    "emerging": 150,
+    "operating": 62,
+    "cancelled": 6,
+    "reported_mw": 56838.9,
+    "median_pop_3mi": 11420,
+    "pushback_count": 32
+  },
+  {
+    "state": "GA",
+    "total_facilities": 182,
+    "emerging": 88,
+    "operating": 85,
+    "cancelled": 5,
+    "reported_mw": 21340.5,
+    "median_pop_3mi": 27679,
+    "pushback_count": 22
+  },
+  {
+    "state": "PA",
+    "total_facilities": 108,
+    "emerging": 58,
+    "operating": 40,
+    "cancelled": 5,
+    "reported_mw": 19479.6,
+    "median_pop_3mi": 26899,
+    "pushback_count": 32
+  },
+  {
+    "state": "OH",
+    "total_facilities": 66,
+    "emerging": 39,
+    "operating": 18,
+    "cancelled": 4,
+    "reported_mw": 18877.1,
+    "median_pop_3mi": 12977,
+    "pushback_count": 27
+  },
+  {
+    "state": "CA",
+    "total_facilities": 44,
+    "emerging": 31,
+    "operating": 8,
+    "cancelled": 2,
+    "reported_mw": 2437.0,
+    "median_pop_3mi": 129995,
+    "pushback_count": 15
+  },
+  {
+    "state": "IN",
+    "total_facilities": 43,
+    "emerging": 25,
+    "operating": 7,
+    "cancelled": 4,
+    "reported_mw": 12771.4,
+    "median_pop_3mi": 20617,
+    "pushback_count": 16
+  },
+  {
+    "state": "IL",
+    "total_facilities": 40,
+    "emerging": 29,
+    "operating": 5,
+    "cancelled": 5,
+    "reported_mw": 7382.4,
+    "median_pop_3mi": 44677,
+    "pushback_count": 12
+  },
+  {
+    "state": "NY",
+    "total_facilities": 35,
+    "emerging": 15,
+    "operating": 15,
+    "cancelled": 2,
+    "reported_mw": 6026.0,
+    "median_pop_3mi": 38132,
+    "pushback_count": 12
+  },
+  {
+    "state": "MO",
+    "total_facilities": 34,
+    "emerging": 24,
+    "operating": 5,
+    "cancelled": 3,
+    "reported_mw": 3680.0,
+    "median_pop_3mi": 13655,
+    "pushback_count": 13
+  },
+  {
+    "state": "NC",
+    "total_facilities": 32,
+    "emerging": 17,
+    "operating": 7,
+    "cancelled": 4,
+    "reported_mw": 1905.0,
+    "median_pop_3mi": 10115,
+    "pushback_count": 9
+  },
+  {
+    "state": "AZ",
+    "total_facilities": 31,
+    "emerging": 20,
+    "operating": 9,
+    "cancelled": 2,
+    "reported_mw": 7008.0,
+    "median_pop_3mi": 56726,
+    "pushback_count": 7
+  },
+  {
+    "state": "MI",
+    "total_facilities": 26,
+    "emerging": 18,
+    "operating": 1,
+    "cancelled": 3,
+    "reported_mw": 5104.0,
+    "median_pop_3mi": 13224,
+    "pushback_count": 13
+  },
+  {
+    "state": "IA",
+    "total_facilities": 22,
+    "emerging": 17,
+    "operating": 5,
+    "cancelled": 0,
+    "reported_mw": 1065.0,
+    "median_pop_3mi": 8813,
+    "pushback_count": 5
+  },
+  {
+    "state": "OR",
+    "total_facilities": 22,
+    "emerging": 10,
+    "operating": 9,
+    "cancelled": 1,
+    "reported_mw": 1597.0,
+    "median_pop_3mi": 43231,
+    "pushback_count": 2
+  },
+  {
+    "state": "WA",
+    "total_facilities": 22,
+    "emerging": 5,
+    "operating": 17,
+    "cancelled": 0,
+    "reported_mw": 157.5,
+    "median_pop_3mi": 71851,
+    "pushback_count": 1
+  },
+  {
+    "state": "KY",
+    "total_facilities": 20,
+    "emerging": 15,
+    "operating": 2,
+    "cancelled": 2,
+    "reported_mw": 7255.0,
+    "median_pop_3mi": 5770,
+    "pushback_count": 9
+  },
+  {
+    "state": "WI",
+    "total_facilities": 20,
+    "emerging": 10,
+    "operating": 2,
+    "cancelled": 6,
+    "reported_mw": 2296.6,
+    "median_pop_3mi": 9915,
+    "pushback_count": 12
+  },
+  {
+    "state": "NV",
+    "total_facilities": 18,
+    "emerging": 13,
+    "operating": 4,
+    "cancelled": 0,
+    "reported_mw": 6024.0,
+    "median_pop_3mi": 16630,
+    "pushback_count": 2
+  },
+  {
+    "state": "MD",
+    "total_facilities": 15,
+    "emerging": 10,
+    "operating": 3,
+    "cancelled": 1,
+    "reported_mw": 2824.0,
+    "median_pop_3mi": 68329,
+    "pushback_count": 4
+  },
+  {
+    "state": "NJ",
+    "total_facilities": 15,
+    "emerging": 6,
+    "operating": 5,
+    "cancelled": 4,
+    "reported_mw": 328.0,
+    "median_pop_3mi": 41708,
+    "pushback_count": 5
+  },
+  {
+    "state": "MN",
+    "total_facilities": 14,
+    "emerging": 8,
+    "operating": 1,
+    "cancelled": 1,
+    "reported_mw": 2225.0,
+    "median_pop_3mi": 11895,
+    "pushback_count": 3
+  },
+  {
+    "state": "LA",
+    "total_facilities": 13,
+    "emerging": 11,
+    "operating": 1,
+    "cancelled": 0,
+    "reported_mw": 2720.0,
+    "median_pop_3mi": 2304,
+    "pushback_count": 3
+  },
+  {
+    "state": "OK",
+    "total_facilities": 13,
+    "emerging": 7,
+    "operating": 5,
+    "cancelled": 1,
+    "reported_mw": 1605.0,
+    "median_pop_3mi": 8229,
+    "pushback_count": 5
+  },
+  {
+    "state": "AL",
+    "total_facilities": 12,
+    "emerging": 7,
+    "operating": 4,
+    "cancelled": 0,
+    "reported_mw": 3116.0,
+    "median_pop_3mi": 6911,
+    "pushback_count": 5
+  },
+  {
+    "state": "TN",
+    "total_facilities": 12,
+    "emerging": 8,
+    "operating": 4,
+    "cancelled": 0,
+    "reported_mw": 2303.0,
+    "median_pop_3mi": 42930,
+    "pushback_count": 4
+  },
+  {
+    "state": "UT",
+    "total_facilities": 12,
+    "emerging": 11,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 13230.0,
+    "median_pop_3mi": 0,
+    "pushback_count": 4
+  },
+  {
+    "state": "WV",
+    "total_facilities": 12,
+    "emerging": 12,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 9353.0,
+    "median_pop_3mi": 9259,
+    "pushback_count": 3
+  },
+  {
+    "state": "CO",
+    "total_facilities": 11,
+    "emerging": 7,
+    "operating": 4,
+    "cancelled": 0,
+    "reported_mw": 3399.0,
+    "median_pop_3mi": 28224,
+    "pushback_count": 4
+  },
+  {
+    "state": "FL",
+    "total_facilities": 11,
+    "emerging": 6,
+    "operating": 0,
+    "cancelled": 2,
+    "reported_mw": 1316.0,
+    "median_pop_3mi": 12239,
+    "pushback_count": 4
+  },
+  {
+    "state": "KS",
+    "total_facilities": 11,
+    "emerging": 9,
+    "operating": 0,
+    "cancelled": 1,
+    "reported_mw": 2918.0,
+    "median_pop_3mi": 5429,
+    "pushback_count": 3
+  },
+  {
+    "state": "SC",
+    "total_facilities": 11,
+    "emerging": 7,
+    "operating": 2,
+    "cancelled": 2,
+    "reported_mw": 1594.0,
+    "median_pop_3mi": 5303,
+    "pushback_count": 6
+  },
+  {
+    "state": "NM",
+    "total_facilities": 10,
+    "emerging": 3,
+    "operating": 5,
+    "cancelled": 1,
+    "reported_mw": 10945.0,
+    "median_pop_3mi": 20527,
+    "pushback_count": 3
+  },
+  {
+    "state": "MS",
+    "total_facilities": 9,
+    "emerging": 8,
+    "operating": 1,
+    "cancelled": 0,
+    "reported_mw": 2487.0,
+    "median_pop_3mi": 14822,
+    "pushback_count": 2
+  },
+  {
+    "state": "NE",
+    "total_facilities": 9,
+    "emerging": 3,
+    "operating": 6,
+    "cancelled": 0,
+    "reported_mw": 215.0,
+    "median_pop_3mi": 41149,
+    "pushback_count": 0
+  },
+  {
+    "state": "AR",
+    "total_facilities": 8,
+    "emerging": 6,
+    "operating": 2,
+    "cancelled": 0,
+    "reported_mw": 650.0,
+    "median_pop_3mi": 6147,
+    "pushback_count": 5
+  },
+  {
+    "state": "ND",
+    "total_facilities": 7,
+    "emerging": 3,
+    "operating": 4,
+    "cancelled": 0,
+    "reported_mw": 2475.0,
+    "median_pop_3mi": 1070,
+    "pushback_count": 1
+  },
+  {
+    "state": "WY",
+    "total_facilities": 6,
+    "emerging": 5,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 11500.0,
+    "median_pop_3mi": 3464,
+    "pushback_count": 1
+  },
+  {
+    "state": "MA",
+    "total_facilities": 5,
+    "emerging": 2,
+    "operating": 2,
+    "cancelled": 0,
+    "reported_mw": 333.0,
+    "median_pop_3mi": 400337,
+    "pushback_count": 1
+  },
+  {
+    "state": "MT",
+    "total_facilities": 5,
+    "emerging": 3,
+    "operating": 0,
+    "cancelled": 2,
+    "reported_mw": 1066.0,
+    "median_pop_3mi": 0,
+    "pushback_count": 3
+  },
+  {
+    "state": "CT",
+    "total_facilities": 4,
+    "emerging": 3,
+    "operating": 0,
+    "cancelled": 1,
+    "reported_mw": 1504.0,
+    "median_pop_3mi": 16111,
+    "pushback_count": 1
+  },
+  {
+    "state": "ID",
+    "total_facilities": 4,
+    "emerging": 3,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 160.0,
+    "median_pop_3mi": 19305,
+    "pushback_count": 3
+  },
+  {
+    "state": "ME",
+    "total_facilities": 4,
+    "emerging": 3,
+    "operating": 0,
+    "cancelled": 1,
+    "reported_mw": 57.0,
+    "median_pop_3mi": 1414,
+    "pushback_count": 2
+  },
+  {
+    "state": "DE",
+    "total_facilities": 3,
+    "emerging": 2,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 1200.0,
+    "median_pop_3mi": 36657,
+    "pushback_count": 1
+  },
+  {
+    "state": "SD",
+    "total_facilities": 3,
+    "emerging": 2,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 932.0,
+    "median_pop_3mi": 11688,
+    "pushback_count": 2
+  },
+  {
+    "state": "AK",
+    "total_facilities": 2,
+    "emerging": 1,
+    "operating": 1,
+    "cancelled": 0,
+    "reported_mw": 3120.0,
+    "median_pop_3mi": 0,
+    "pushback_count": 0
+  },
+  {
+    "state": "NH",
+    "total_facilities": 2,
+    "emerging": 0,
+    "operating": 1,
+    "cancelled": 0,
+    "reported_mw": 0.0,
+    "median_pop_3mi": 18261,
+    "pushback_count": 1
+  },
+  {
+    "state": "CO ",
+    "total_facilities": 1,
+    "emerging": 1,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 11.0,
+    "median_pop_3mi": 59723,
+    "pushback_count": 1
+  },
+  {
+    "state": "HI",
+    "total_facilities": 1,
+    "emerging": 1,
+    "operating": 0,
+    "cancelled": 0,
+    "reported_mw": 0.0,
+    "median_pop_3mi": 79759,
+    "pushback_count": 0
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "dataset": {
+    "source": "FracTracker Alliance National Data Centers Tracker",
+    "total_records": 1693,
+    "location_confidence_counts": {
+      "High": 1326,
+      "Medium": 316,
+      "Low": 49
+    },
+    "mw_reported_pct": 39.5
+  },
+  "census": {
+    "source": "2020 Census (via Microsoft Planetary Computer us-census collection)",
+    "total_population_verified": 334735155,
+    "note": "Block-group population aggregated from real block-level counts; block group represented by its polygon's geometric centroid (equal-area projected), not an official population-weighted center of population."
+  },
+  "proximity_method": {
+    "note": "Counts the full population of any block group whose centroid falls within the radius - a coarser approximation than areal-weighted population, especially for large rural block groups."
+  },
+  "pushback_finding": {
+    "note": "Facilities with FracTracker-documented community pushback ('Yes') have LOWER median nearby population than facilities with unknown/unreported pushback status - the opposite of a naive 'more neighbors -> more opposition' hypothesis. Likely reflects organized opposition clustering in smaller rural/exurban communities rather than dense areas.",
+    "median_pop_1mi_by_pushback": {
+      "Unknown": 2461,
+      "Yes": 767
+    },
+    "median_pop_3mi_by_pushback": {
+      "Unknown": 38884,
+      "Yes": 8633
+    }
+  }
+}
